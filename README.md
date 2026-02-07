@@ -2,6 +2,8 @@
 
 A full-stack personal finance management application for tracking income, expenses, and spending habits. Built with a modern TypeScript monorepo architecture using NestJS, React, and PostgreSQL.
 
+**Repository:** https://github.com/SagarKarmoker/SpendWise-expense-tracker
+
 ## Table of Contents
 
 - [System Architecture](#system-architecture)
