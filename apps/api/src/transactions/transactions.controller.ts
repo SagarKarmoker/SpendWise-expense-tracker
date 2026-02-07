@@ -8,10 +8,13 @@ import {
   Param, 
   Query, 
   UseGuards, 
-  Request 
+  Request,
+  Res
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { Response } from 'express';
 import { TransactionsService } from './transactions.service';
+import { PdfService } from './pdf.service';
 import { CreateTransactionDto, UpdateTransactionDto } from './dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 
@@ -20,7 +23,10 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class TransactionsController {
-  constructor(private readonly transactionsService: TransactionsService) {}
+  constructor(
+    private readonly transactionsService: TransactionsService,
+    private readonly pdfService: PdfService
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all transactions for current user' })
@@ -58,5 +64,23 @@ export class TransactionsController {
   @ApiOperation({ summary: 'Delete a transaction' })
   async remove(@Param('id') id: string, @Request() req) {
     return this.transactionsService.remove(id, req.user.userId);
+  }
+
+  @Get('report/pdf')
+  @ApiOperation({ summary: 'Download all transactions as PDF report' })
+  async downloadPdf(
+    @Res() res: Response,
+    @Request() req,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const transactions = await this.transactionsService.findAll(req.user.userId, { startDate, endDate });
+
+    const doc = this.pdfService.generateTransactionReport(transactions);
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="transactions-report.pdf"');
+
+    doc.pipe(res);
   }
 }

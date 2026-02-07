@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#D4F00C"/>
+  
+  <!-- Dollar sign -->
+  <text x="50" y="70" 
+        font-family="system-ui, -apple-system, sans-serif" 
+        font-size="60" 
+        font-weight="bold" 
+        text-anchor="middle" 
+        fill="#0F0F0F">$</text>
+  
+  <!-- Up arrow for tracking/growth -->
+  <path d="M50 15 L60 30 L55 30 L55 25 L45 25 L45 30 L40 30 Z" 
+        fill="#0F0F0F"/>
+</svg>

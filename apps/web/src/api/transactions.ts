@@ -37,4 +37,9 @@ export const transactionsApi = {
     api.put<Transaction>(`/transactions/${id}`, data),
   delete: (id: string) =>
     api.delete(`/transactions/${id}`),
+  downloadPdf: (params?: { startDate?: string; endDate?: string }) =>
+    api.get('/transactions/report/pdf', { 
+      params,
+      responseType: 'blob'
+    }),
 }
