@@ -1,0 +1,27 @@
+{
+  "name": "spend-tracker",
+  "version": "1.0.0",
+  "description": "Spend Tracker - A personal finance management app",
+  "private": true,
+  "packageManager": "npm@11.6.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:up": "docker-compose up -d postgres",
+    "db:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.18",
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
