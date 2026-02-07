@@ -594,7 +594,7 @@ npm run preview      # Preview production build
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/SagarKarmoker/spendwise-expense-tracker
    cd spendwise-expense-tracker
    ```
 
