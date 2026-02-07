@@ -663,6 +663,23 @@ npm run preview      # Preview production build
 
 3. **Serve static files** using nginx, Apache, or any static file server from the `dist/` folder.
 
+### Vercel Deployment (Monorepo)
+
+Deploying to Vercel requires creating two separate projects:
+
+1. **Frontend (`apps/web`)**:
+   - **Framework Preset**: Vite
+   - **Root Directory**: `apps/web`
+   - **Build Command**: `cd ../.. && npm run build --workspace=@spend-tracker/types && cd apps/web && npm run build`
+   - **Install Command**: `cd ../.. && npm install`
+
+2. **Backend API (`apps/api`)**:
+   - **Framework Preset**: Other / Node.js
+   - **Root Directory**: `apps/api`
+   - **Build Command**: `cd ../.. && npm run build --workspace=@spend-tracker/types && cd apps/api && npm run build`
+   - **Install Command**: `cd ../.. && npm install`
+   - **vercel.json**: Included in `apps/api/` for serverless routing.
+
 ### Production Checklist
 
 - [ ] Change default database credentials
