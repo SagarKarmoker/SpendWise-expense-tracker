@@ -1,0 +1,21 @@
+# Environment variables
+apps/api/.env
+apps/web/.env
+
+# Dependencies
+node_modules
+
+# Turbo
+.turbo
+
+# Build outputs
+dist
+build
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
