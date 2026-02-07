@@ -21,17 +21,6 @@ services:
     networks:
       - spend-tracker-network
 
-  # Redis Cache (optional but included for future use)
-  redis:
-    image: redis:7-alpine
-    container_name: spend-tracker-redis
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - spend-tracker-network
-
   # NestJS API
   api:
     build:
@@ -48,15 +37,11 @@ services:
       DB_NAME: ${DB_NAME:-spendtracker}
       JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-this-in-production}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-24h}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
     ports:
       - "${API_PORT:-3000}:3000"
     depends_on:
       postgres:
         condition: service_healthy
-      redis:
-        condition: service_started
     networks:
       - spend-tracker-network
     restart: unless-stopped
@@ -83,7 +68,6 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:
 
 networks:
   spend-tracker-network:

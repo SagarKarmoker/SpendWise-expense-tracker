@@ -50,7 +50,6 @@ graph TB
 
     subgraph infra ["Infrastructure (Docker)"]
         PostgreSQL["PostgreSQL 16"]
-        Redis["Redis 7"]
     end
 
     React --> ViteProxy
@@ -208,7 +207,7 @@ graph TD
 | Technology | Purpose |
 |---|---|
 | Turborepo | Monorepo build orchestration |
-| Docker Compose | PostgreSQL and Redis containers |
+| Docker Compose | PostgreSQL container |
 | npm Workspaces | Dependency management across packages |
 
 ---
@@ -426,7 +425,7 @@ expense-tracker/
 │   └── types/
 │       └── src/index.ts              # Shared TypeScript interfaces
 │
-├── docker-compose.yml                # PostgreSQL 16 + Redis 7
+├── docker-compose.yml                # PostgreSQL 16
 ├── turbo.json                        # Turborepo pipeline config
 └── package.json                      # Workspace root, scripts
 ```
@@ -467,7 +466,7 @@ Edit `apps/api/.env` and set a strong `JWT_SECRET` for production.
 npm run db:up
 ```
 
-This starts PostgreSQL 16 and Redis 7 via Docker Compose. The database schema is auto-synchronized in development mode via TypeORM.
+This starts PostgreSQL 16 via Docker Compose. The database schema is auto-synchronized in development mode via TypeORM.
 
 ### 4. Start Development Servers
 
@@ -563,7 +562,7 @@ Open http://localhost:5173, click **Sign up**, and register. Default categories 
 | `npm run build` | Build all packages |
 | `npm run lint` | Lint all packages |
 | `npm run typecheck` | Type-check all packages |
-| `npm run db:up` | Start PostgreSQL + Redis containers |
+| `npm run db:up` | Start PostgreSQL container |
 | `npm run db:down` | Stop and remove containers |
 
 ### API-Specific Scripts
@@ -584,6 +583,95 @@ npm run dev          # Start Vite dev server
 npm run build        # Type-check + production build
 npm run preview      # Preview production build
 ```
+
+---
+
+## Production Deployment
+
+### Docker Deployment (Recommended)
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd spendwise-expense-tracker
+   ```
+
+2. **Configure environment variables:**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and update the following for production:
+   - `JWT_SECRET`: Generate a secure random string (use `openssl rand -base64 32`)
+   - `DB_PASSWORD`: Use a strong database password
+   - `DB_USER`: Change from default if desired
+   - `NODE_ENV=production`
+
+3. **Build and start services:**
+   ```bash
+   docker-compose up --build -d
+   ```
+
+4. **Verify deployment:**
+   - Web App: http://localhost
+   - API: http://localhost:3000
+   - API Docs: http://localhost:3000/api
+
+### Manual Deployment
+
+#### Backend (API)
+
+1. **Install dependencies:**
+   ```bash
+   cd apps/api
+   npm install --production
+   ```
+
+2. **Set environment variables:**
+   ```bash
+   export NODE_ENV=production
+   export DB_HOST=your-db-host
+   export DB_PORT=5432
+   export DB_USERNAME=your-db-user
+   export DB_PASSWORD=your-secure-password
+   export DB_NAME=spendtracker
+   export JWT_SECRET=your-secure-jwt-secret
+   export JWT_EXPIRATION=24h
+   export PORT=3000
+   ```
+
+3. **Build and start:**
+   ```bash
+   npm run build
+   npm start
+   ```
+
+#### Frontend (Web)
+
+1. **Install dependencies:**
+   ```bash
+   cd apps/web
+   npm install
+   ```
+
+2. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+3. **Serve static files** using nginx, Apache, or any static file server from the `dist/` folder.
+
+### Production Checklist
+
+- [ ] Change default database credentials
+- [ ] Set a strong JWT_SECRET (minimum 32 characters)
+- [ ] Configure firewall rules (only expose necessary ports)
+- [ ] Set up SSL/TLS certificates
+- [ ] Configure automated database backups
+- [ ] Set up monitoring and logging
+- [ ] Disable database synchronization in production (`synchronize: false`)
+- [ ] Run database migrations instead of auto-sync
+- [ ] Use environment-specific CORS settings
 
 ---
 

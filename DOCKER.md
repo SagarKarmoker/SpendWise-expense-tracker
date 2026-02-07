@@ -22,7 +22,6 @@ This application is fully containerized with Docker.
 ## Services
 
 - **PostgreSQL** (port 5432) - Database
-- **Redis** (port 6379) - Cache
 - **API** (port 3000) - NestJS backend
 - **Web** (port 80) - React frontend
 
