@@ -22,9 +22,14 @@ import { HealthModule } from './health/health.module';
       password: process.env.DATABASE_URL ? undefined : process.env.DB_PASSWORD || 'spendtracker',
       database: process.env.DATABASE_URL ? undefined : process.env.DB_NAME || 'spendtracker',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: process.env.NODE_ENV !== 'production',
-      logging: process.env.NODE_ENV === 'development',
+      synchronize: false, // Disabled for production safety
+      logging: false,
       ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+      extra: {
+        max: 5, // Limit connection pool for serverless
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 10000,
+      },
     }),
     HealthModule,
     AuthModule,

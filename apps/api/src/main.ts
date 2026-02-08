@@ -6,39 +6,59 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 
 const server = express();
+let app: any;
+let isInitialized = false;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+  if (isInitialized) return;
+  
+  try {
+    app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
-  app.enableCors({
-    origin: process.env.FRONTEND_URL || '*',
-    credentials: true,
-  });
+    app.enableCors({
+      origin: process.env.FRONTEND_URL || '*',
+      credentials: true,
+    });
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true,
-  }));
+    app.useGlobalPipes(new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }));
 
-  const config = new DocumentBuilder()
-    .setTitle('Spend Tracker API')
-    .setDescription('API for managing personal finances')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+    const config = new DocumentBuilder()
+      .setTitle('Spend Tracker API')
+      .setDescription('API for managing personal finances')
+      .setVersion('1.0')
+      .addBearerAuth()
+      .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
 
-  await app.init();
+    await app.init();
+    isInitialized = true;
+    console.log('NestJS app initialized successfully');
 
-  const port = process.env.PORT || 3000;
-  if (process.env.VERCEL !== '1') {
-    await app.listen(port);
-    console.log(`Application is running on: http://localhost:${port}`);
-    console.log(`API Documentation: http://localhost:${port}/api`);
+    // For local development only
+    if (!process.env.VERCEL) {
+      const port = process.env.PORT || 3000;
+      await app.listen(port);
+      console.log(`Application is running on: http://localhost:${port}`);
+      console.log(`API Documentation: http://localhost:${port}/api`);
+    }
+  } catch (error) {
+    console.error('Failed to initialize app:', error);
+    throw error;
   }
 }
+
+// Initialize immediately
 bootstrap();
 
-export default server;
+// Vercel serverless handler
+export default async function handler(req: any, res: any) {
+  if (!isInitialized) {
+    await bootstrap();
+  }
+  return server(req, res);
+}
