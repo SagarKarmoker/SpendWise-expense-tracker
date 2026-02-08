@@ -3,29 +3,13 @@
   "builds": [
     {
       "src": "apps/api/src/main.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "packages/types/**"
-        ]
-      }
-    },
-    {
-      "src": "apps/web/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "apps/api/src/main.ts"
-    },
-    {
       "src": "/(.*)",
-      "dest": "apps/web/dist/$1"
+      "dest": "apps/api/src/main.ts"
     }
   ]
 }
