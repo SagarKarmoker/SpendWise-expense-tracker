@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "globals": "^13.24.0",
+    "typescript": "^5.7.3"
   }
 }
