@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "cd ../../ && npm run build && cd apps/web && npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
