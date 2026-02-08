@@ -52,11 +52,10 @@ const Layout = () => {
                 <NavLink
                   key={to}
                   to={to}
-                  className={({ isActive }) =>
-                    `inline-flex items-center gap-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'text-primary'
-                        : 'text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark'
+                  className={({ isActive }: { isActive: boolean }) =>
+                    `inline-flex items-center gap-2 text-sm font-medium transition-colors ${isActive
+                      ? 'text-primary'
+                      : 'text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark'
                     }`
                   }
                 >
@@ -80,7 +79,7 @@ const Layout = () => {
                   <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
                 )}
               </button>
-              
+
               {/* Desktop User Info */}
               <div className="hidden md:flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
@@ -144,11 +143,10 @@ const Layout = () => {
                 <NavLink
                   key={to}
                   to={to}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-subtext-light dark:text-subtext-dark hover:bg-gray-100 dark:hover:bg-gray-800'
+                  className={({ isActive }: { isActive: boolean }) =>
+                    `flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-colors ${isActive
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-subtext-light dark:text-subtext-dark hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`
                   }
                 >

@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, ComponentType } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { categoriesApi, CreateCategoryData } from '../api/categories'
 import { Plus, Pencil, Trash2, X, TrendingUp, TrendingDown, Tag, ShoppingBag, Coffee, Home, Car, Briefcase, Gift } from 'lucide-react'
 
 // Map category icons to Lucide components
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   'shopping-bag': ShoppingBag,
   'coffee': Coffee,
   'home': Home,
