@@ -117,7 +117,7 @@ const Dashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-text-light dark:text-text-dark">
-            Welcome back{user?.name ? `, ${user.name}` : ''}
+            Welcome back{user?.name ? `, ${user.name} ` : ''}
           </h1>
           <p className="text-sm sm:text-base text-subtext-light dark:text-subtext-dark mt-1">
             {transactionCount} transaction{transactionCount !== 1 ? 's' : ''} total
@@ -144,7 +144,7 @@ const Dashboard = () => {
               <span className="text-xs sm:text-sm text-gray-400">Total Balance</span>
             </div>
             <p className="text-2xl sm:text-3xl font-bold">৳{balance.toFixed(2)}</p>
-            <p className={`text-xs sm:text-sm mt-1 sm:mt-2 ${balance >= 0 ? 'text-primary' : 'text-red-400'}`}>
+            <p className={`text - xs sm: text - sm mt - 1 sm: mt - 2 ${balance >= 0 ? 'text-primary' : 'text-red-400'} `}>
               {balance >= 0 ? 'Healthy' : 'Over budget'}
             </p>
           </div>
@@ -162,7 +162,7 @@ const Dashboard = () => {
             ৳{income.toFixed(2)}
           </p>
           {lastMonthIncome > 0 || thisMonthIncome > 0 ? (
-            <p className={`text-xs sm:text-sm mt-1 sm:mt-2 ${incomeChange >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+            <p className={`text - xs sm: text - sm mt - 1 sm: mt - 2 ${incomeChange >= 0 ? 'text-green-600' : 'text-red-500'} `}>
               {incomeChange >= 0 ? '+' : ''}{incomeChange}% vs last month
             </p>
           ) : (
@@ -182,7 +182,7 @@ const Dashboard = () => {
             ৳{expense.toFixed(2)}
           </p>
           {lastMonthExpense > 0 || thisMonthExpense > 0 ? (
-            <p className={`text-xs sm:text-sm mt-1 sm:mt-2 ${expenseChange <= 0 ? 'text-green-600' : 'text-red-500'}`}>
+            <p className={`text - xs sm: text - sm mt - 1 sm: mt - 2 ${expenseChange <= 0 ? 'text-green-600' : 'text-red-500'} `}>
               {expenseChange >= 0 ? '+' : ''}{expenseChange}% vs last month
             </p>
           ) : (
@@ -256,7 +256,7 @@ const Dashboard = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={sourceChartData} layout="vertical" margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.2} />
-                  <XAxis type="number" tickFormatter={(v) => `৳${v}`} fontSize={10} stroke="#888" />
+                  <XAxis type="number" tickFormatter={(v: number) => `৳${v}`} fontSize={10} stroke="#888" />
                   <YAxis type="category" dataKey="source" fontSize={10} stroke="#888" width={60} />
                   <Tooltip
                     contentStyle={{
@@ -316,11 +316,10 @@ const Dashboard = () => {
                   className="flex items-center justify-between p-3 sm:p-4 bg-accent-gray dark:bg-background-dark rounded-xl sm:rounded-2xl"
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0 ${
-                      transaction.type === 'INCOME'
-                        ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
-                        : 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400'
-                    }`}>
+                    <div className={`w - 10 h - 10 sm: w - 12 sm: h - 12 rounded - xl sm: rounded - 2xl flex items - center justify - center flex - shrink - 0 ${transaction.type === 'INCOME'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400'
+                      } `}>
                       {transaction.type === 'INCOME' ? (
                         <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
                       ) : (
@@ -341,9 +340,8 @@ const Dashboard = () => {
                       </p>
                     </div>
                   </div>
-                  <span className={`font-bold text-sm sm:text-base whitespace-nowrap ml-2 ${
-                    transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-500'
-                  }`}>
+                  <span className={`font - bold text - sm sm: text - base whitespace - nowrap ml - 2 ${transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-500'
+                    } `}>
                     {transaction.type === 'INCOME' ? '+' : '-'}৳{Number(transaction.amount).toFixed(2)}
                   </span>
                 </div>
